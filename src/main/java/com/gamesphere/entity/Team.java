@@ -34,6 +34,9 @@ public class Team {
     @Column(unique = true, nullable = false)
     private String tag;
 
+    @Column(length = 255)
+    private String description;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "captain_id")
     private User captain;
