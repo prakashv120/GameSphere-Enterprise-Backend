@@ -1,4 +1,4 @@
-# 🎮 GameSphere - Enterprise Esports Tournament Management Platform
+#  GameSphere - Enterprise Esports Tournament Management Platform
 
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.0-brightgreen)
@@ -14,7 +14,7 @@
 
 ---
 
-# 📌 Overview
+#  Overview
 
 GameSphere is a **production-ready Enterprise Java Backend** application developed using **Java 21** and **Spring Boot 3** for managing esports tournaments.
 
