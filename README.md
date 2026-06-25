@@ -36,7 +36,7 @@ The application demonstrates modern backend engineering concepts including:
 
 ---
 
-# ✨ Features
+#  Features
 
 ## Authentication & Security
 
@@ -141,7 +141,7 @@ If Redis becomes unavailable, the application automatically falls back to databa
 
 ---
 
-# 🏗️ System Architecture
+#  System Architecture
 
 ```text
                     Client
@@ -165,7 +165,7 @@ If Redis becomes unavailable, the application automatically falls back to databa
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```
 GameSphere
@@ -206,7 +206,7 @@ GameSphere
 
 ---
 
-# 🛠 Technology Stack
+#  Technology Stack
 
 ## Language
 
@@ -286,7 +286,7 @@ GameSphere
 
 ---
 
-# 📊 Database Entity Relationship
+#  Database Entity Relationship
 
 ```mermaid
 erDiagram
@@ -310,7 +310,7 @@ MATCH }o--|| TEAM : winner
 
 ---
 
-# 🧩 Core Entities
+#  Core Entities
 
 ### User
 
@@ -367,7 +367,7 @@ Stores
 
 ---
 
-# 🔐 Authentication Flow
+#  Authentication Flow
 
 ```text
 User Login
@@ -392,7 +392,7 @@ Authorized Request
 
 ---
 
-# ⚙ Configuration
+#  Configuration
 
 ## Requirements
 
@@ -438,7 +438,7 @@ JWT_SECRET=YOUR_SECRET_KEY
 
 ---
 
-# 🚀 Running Locally
+ 🚀 Running Locally
 
 Build
 
@@ -465,7 +465,7 @@ http://localhost:8080/api/v1/health
 ```
 
 ---
-# 🐳 Docker Deployment
+#  Docker Deployment
 
 GameSphere supports Docker for easy deployment and environment consistency.
 
@@ -499,7 +499,7 @@ docker compose down
 
 ---
 
-# 🧪 Testing
+#  Testing
 
 GameSphere follows a multi-layered testing strategy to ensure reliability and maintainability.
 
@@ -572,7 +572,7 @@ mvn clean install
 
 ---
 
-# 🚀 API Documentation
+#  API Documentation
 
 The project includes a complete Postman Collection.
 
@@ -590,7 +590,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ---
 
-# 📡 REST API Endpoints
+#  REST API Endpoints
 
 ## Authentication
 
@@ -682,7 +682,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ---
 
-# 🔒 Security Features
+#  Security Features
 
 - JWT Authentication
 - Stateless Session Management
@@ -694,7 +694,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ---
 
-# ⚡ Performance Optimizations
+#  Performance Optimizations
 
 - Redis Caching
 - Pagination
@@ -707,7 +707,7 @@ Authorization: Bearer <JWT_TOKEN>
 
 ---
 
-# 🔄 CI/CD
+#  CI/CD
 
 GitHub Actions automatically performs:
 
@@ -731,43 +731,7 @@ Build Success ✅
 ```
 
 ---
-
-# 📷 Screenshots
-
-You can add screenshots here.
-
-Example:
-
-```
-screenshots/
-
-├── login.png
-├── register.png
-├── teams.png
-├── tournaments.png
-├── matches.png
-├── leaderboard.png
-├── dashboard.png
-├── health.png
-├── docker.png
-└── pgadmin.png
-```
-
-Example Markdown
-
-```md
-## Login API
-
-![Login](screenshots/login.png)
-
-## Dashboard
-
-![Dashboard](screenshots/dashboard.png)
-```
-
----
-
-# 🌟 Future Enhancements
+#  Future Enhancements
 
 - Email Notifications
 - Live Match Tracking using WebSockets
@@ -782,7 +746,7 @@ Example Markdown
 
 ---
 
-# 📈 Project Highlights
+#  Project Highlights
 
 ✔ Enterprise Layered Architecture
 
@@ -814,7 +778,7 @@ Example Markdown
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 **Prakash V**
 
@@ -840,7 +804,7 @@ LinkedIn
 
 ---
 
-# 🤝 Contributing
+#  Contributing
 
 Contributions, issues, and feature requests are welcome.
 
@@ -848,21 +812,21 @@ Feel free to fork the repository and submit pull requests.
 
 ---
 
-# 📄 License
+#  License
 
 This project is licensed under the MIT License.
 
 ---
 
-# ⭐ Support
+#  Support
 
 If you found this project helpful,
 
-⭐ Star the repository
+ Star the repository
 
-🍴 Fork the repository
+ Fork the repository
 
-📢 Share it with others
+ Share it with others
 
 ---
 
