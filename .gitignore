@@ -1,0 +1,10 @@
+/target/
+*.class
+.idea/
+.settings/
+.project
+.classpath
+*.log
+*.zip
+*.tar.gz
+*.tmp
