@@ -1,0 +1,92 @@
+version: '3.9'
+
+services:
+
+  # ────────────────────────────────────────────────────────────
+  # PostgreSQL Database
+  # ────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: gamesphere-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gamesphere_db
+      POSTGRES_USER: gamesphere_user
+      POSTGRES_PASSWORD: gamesphere_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gamesphere-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gamesphere_user -d gamesphere_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ────────────────────────────────────────────────────────────
+  # Redis Cache
+  # ────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: gamesphere-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - gamesphere-network
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ────────────────────────────────────────────────────────────
+  # GameSphere Application
+  # ────────────────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gamesphere-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/gamesphere_db
+      SPRING_DATASOURCE_USERNAME: gamesphere_user
+      SPRING_DATASOURCE_PASSWORD: gamesphere_pass
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: gamesphere-super-secret-jwt-key-change-in-production-256bit
+      JWT_EXPIRATION: 86400000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - gamesphere-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  gamesphere-network:
+    driver: bridge

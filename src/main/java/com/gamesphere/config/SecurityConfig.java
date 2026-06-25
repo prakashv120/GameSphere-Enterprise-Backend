@@ -58,11 +58,26 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // Public endpoints
                         .requestMatchers("/api/v1/auth/**", "/api/v1/health").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/tournaments/**", "/api/v1/matches/**", "/api/v1/teams/**", "/api/v1/leaderboard/**", "/api/v1/dashboard/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/tournaments/**", "/api/v1/matches/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/tournaments/**", "/api/v1/matches/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/tournaments/**", "/api/v1/matches/**").hasRole("ADMIN")
+                        // Public read-only endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/v1/tournaments/**", "/api/v1/matches/**",
+                                "/api/v1/teams/**", "/api/v1/leaderboard/**", "/api/v1/dashboard/**").permitAll()
+                        // Tournament: ADMIN only for create, update, delete, status change
+                        .requestMatchers(HttpMethod.POST, "/api/v1/tournaments").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/tournaments/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/tournaments/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/tournaments").hasRole("ADMIN")
+                        // Tournament register/deregister: authenticated (role check via @PreAuthorize)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/tournaments/*/register").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/tournaments/*/deregister").authenticated()
+                        // Matches: ADMIN only for schedule, result recording, status, delete
+                        .requestMatchers(HttpMethod.POST, "/api/v1/matches").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/matches/*/result").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/matches/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/matches/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/matches/**").hasRole("ADMIN")
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 );
 

@@ -9,14 +9,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamSummaryResponse implements java.io.Serializable {
+public class LeaderboardEntryResponse implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-    private String name;
-    private String tag;
-    private int memberCount;
+
+    private int rank;
+    private Long teamId;
+    private String teamName;
+    private String teamTag;
     private int wins;
     private int losses;
     private double winRate;
+    private int memberCount;
 }

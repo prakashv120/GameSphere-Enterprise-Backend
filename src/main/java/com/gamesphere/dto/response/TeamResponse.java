@@ -12,7 +12,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeamResponse {
+public class TeamResponse implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String name;
@@ -31,7 +32,8 @@ public class TeamResponse {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CaptainInfo {
+    public static class CaptainInfo implements java.io.Serializable {
+        private static final long serialVersionUID = 1L;
         private Long id;
         private String username;
         private String email;
@@ -41,7 +43,8 @@ public class TeamResponse {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MemberInfo {
+    public static class MemberInfo implements java.io.Serializable {
+        private static final long serialVersionUID = 1L;
         private Long id;
         private String username;
         private String email;

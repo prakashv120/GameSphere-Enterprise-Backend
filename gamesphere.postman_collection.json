@@ -1,0 +1,1122 @@
+{
+  "info": {
+    "name": "GameSphere API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Player",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"proplayer\",\n  \"email\": \"pro@gamesphere.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"PLAYER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"adminuser\",\n  \"email\": \"admin@gamesphere.com\",\n  \"password\": \"Admin123!\",\n  \"role\": \"ADMIN\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set(\"jwtToken\", jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"proplayer\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Professional Player\",\n  \"bio\": \"Apex Legends and Valorant Competitor\",\n  \"phone\": \"+15551234567\",\n  \"avatarUrl\": \"https://gamesphere.com/avatars/proplayer.png\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Players",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/users/account",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "account"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "item": [
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Apex Predators\",\n  \"tag\": \"PRED\",\n  \"description\": \"Championship caliber Apex Legends team\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Team by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Teams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams?page=0&size=10&sortBy=name&sortDir=asc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "name"
+                },
+                {
+                  "key": "sortDir",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Teams",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/search?name=Predators&page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Predators"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Join Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/join",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1",
+                "join"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Leave Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/leave",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1",
+                "leave"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Transfer Captaincy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/transfer-captaincy?newCaptainId=2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1",
+                "transfer-captaincy"
+              ],
+              "query": [
+                {
+                  "key": "newCaptainId",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Remove Team Member",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/members/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1",
+                "members",
+                "3"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Team",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/teams/1/admin",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                "1",
+                "admin"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tournament",
+      "item": [
+        {
+          "name": "Create Tournament (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Championship Series 2026\",\n  \"description\": \"The biggest event of the year\",\n  \"maxTeams\": 32,\n  \"prizePool\": 25000.00,\n  \"startDate\": \"2026-08-01T12:00:00\",\n  \"endDate\": \"2026-08-15T22:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tournament by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Tournaments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments?status=UPCOMING&page=0&size=10&sortBy=startDate&sortDir=asc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "UPCOMING"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "startDate"
+                },
+                {
+                  "key": "sortDir",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Tournaments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/search?name=Championship&page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Championship"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Tournament (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Championship Series 2026 Edition\",\n  \"description\": \"Updated tournament details\",\n  \"prizePool\": 30000.00\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Status (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1/status?status=ACTIVE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "ACTIVE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Register Team for Tournament",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1/register?teamId=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1",
+                "register"
+              ],
+              "query": [
+                {
+                  "key": "teamId",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deregister Team from Tournament",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1/deregister?teamId=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1",
+                "deregister"
+              ],
+              "query": [
+                {
+                  "key": "teamId",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Tournament (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/tournaments/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tournaments",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Match",
+      "item": [
+        {
+          "name": "Schedule Match (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tournamentId\": 1,\n  \"teamAId\": 1,\n  \"teamBId\": 2,\n  \"scheduledAt\": \"2026-08-05T18:00:00\",\n  \"notes\": \"Opening Match of Tournament\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Match by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Matches",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches?status=SCHEDULED&page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SCHEDULED"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Matches by Tournament",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/tournament/1?status=SCHEDULED&page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "tournament",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SCHEDULED"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Matches by Team",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/team/1?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "team",
+                "1"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Record Match Result (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"teamAScore\": 3,\n  \"teamBScore\": 1,\n  \"notes\": \"Team A dominated Game 1 and 3\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1/result",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "1",
+                "result"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Match Status (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1/status?status=LIVE",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "1",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "LIVE"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Match (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/matches/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matches",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leaderboard & Stats",
+      "item": [
+        {
+          "name": "Get Team Leaderboard",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/leaderboard?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "leaderboard"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Dashboard Stats (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "dashboard"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "System Health",
+      "item": [
+        {
+          "name": "Health Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "jwtToken",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

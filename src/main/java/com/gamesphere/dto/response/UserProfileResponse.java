@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfileResponse {
+public class UserProfileResponse implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String username;
     private String email;

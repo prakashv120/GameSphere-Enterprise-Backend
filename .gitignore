@@ -8,3 +8,8 @@
 *.zip
 *.tar.gz
 *.tmp
+target/
+.env
+.idea/
+.vscode/
+*.log

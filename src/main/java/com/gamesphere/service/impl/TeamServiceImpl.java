@@ -71,6 +71,12 @@ public class TeamServiceImpl implements TeamService {
         // Assign the captain as the first member
         captain.setTeam(savedTeam);
         userRepository.save(captain);
+        
+        // Synchronize in-memory collection
+        if (savedTeam.getMembers() == null) {
+            savedTeam.setMembers(new java.util.ArrayList<>());
+        }
+        savedTeam.getMembers().add(captain);
 
         // Reload with members populated
         Team reloaded = findTeamById(savedTeam.getId());
@@ -184,6 +190,12 @@ public class TeamServiceImpl implements TeamService {
         user.setTeam(team);
         userRepository.save(user);
 
+        // Synchronize in-memory collection
+        if (team.getMembers() == null) {
+            team.setMembers(new java.util.ArrayList<>());
+        }
+        team.getMembers().add(user);
+
         Team reloaded = findTeamById(teamId);
         log.info("User id={} joined team '{}'.", userId, team.getName());
         return teamMapper.toTeamResponse(reloaded);
@@ -206,6 +218,12 @@ public class TeamServiceImpl implements TeamService {
 
         user.setTeam(null);
         userRepository.save(user);
+
+        // Synchronize in-memory collection
+        if (team.getMembers() != null) {
+            team.getMembers().remove(user);
+        }
+
         log.info("User id={} left team '{}'.", userId, team.getName());
     }
 
@@ -248,6 +266,11 @@ public class TeamServiceImpl implements TeamService {
 
         memberToRemove.setTeam(null);
         userRepository.save(memberToRemove);
+
+        // Synchronize in-memory collection
+        if (team.getMembers() != null) {
+            team.getMembers().remove(memberToRemove);
+        }
 
         Team reloaded = findTeamById(teamId);
         log.info("Member id={} removed from team '{}'.", memberIdToRemove, team.getName());

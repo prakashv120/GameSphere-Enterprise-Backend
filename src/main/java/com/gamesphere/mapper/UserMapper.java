@@ -15,9 +15,7 @@ public class UserMapper {
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .role(user.getRole())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt());
+                .role(user.getRole());
 
         if (user.getTeam() != null) {
             builder.teamId(user.getTeam().getId())
@@ -32,7 +30,12 @@ public class UserMapper {
                     .phone(profile.getPhone())
                     .wins(profile.getWins())
                     .losses(profile.getLosses())
-                    .winRate(profile.getWinRate());
+                    .winRate(profile.getWinRate())
+                    .createdAt(profile.getCreatedAt())
+                    .updatedAt(profile.getUpdatedAt());
+        } else {
+            builder.createdAt(user.getCreatedAt())
+                    .updatedAt(user.getUpdatedAt());
         }
 
         return builder.build();
